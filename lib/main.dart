@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,11 +22,14 @@ class ImageListState extends State<ImageList> {
 
   List<String> _images = [];
 
+  List<bool> _isBlur = [];
+
   void _addImage() {
     setState(
       () {
         if (_images.length < _imagePath.length) {
           _images.add(_imagePath[_images.length]);
+          _isBlur.add(true);
         }
       },
     );
@@ -33,6 +38,7 @@ class ImageListState extends State<ImageList> {
   void _removeImage(int i) {
     setState(() {
       _images.removeAt(i);
+      _isBlur.removeAt(i);
     });
   }
 
@@ -45,6 +51,12 @@ class ImageListState extends State<ImageList> {
   void _clearImage() {
     setState(() {
       _images.clear();
+    });
+  }
+
+  void deblurImage() {
+    setState(() {
+      _isBlur.add(false);
     });
   }
 
@@ -94,8 +106,28 @@ class ImageListState extends State<ImageList> {
                             padding: const EdgeInsets.all(15.0),
                             child: Container(
                               padding: EdgeInsets.all(10),
-                              child: Image.asset(
-                                _images[index],
+                              child: Stack(
+                                children: [
+                                  ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
+                                      sigmaX: 4.0,
+                                      sigmaY: 4.0,
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Image.asset(
+                                          _images[index],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      deblurImage();
+                                    },
+                                    child: Text('Remove Blur'),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
