@@ -54,7 +54,7 @@ class ImageListState extends State<ImageList> {
     });
   }
 
-  void deblurImage() {
+  void deblurImage(int i) {
     setState(() {
       _isBlur.add(false);
     });
@@ -109,10 +109,11 @@ class ImageListState extends State<ImageList> {
                               child: Stack(
                                 children: [
                                   ImageFiltered(
-                                    imageFilter: ImageFilter.blur(
-                                      sigmaX: 4.0,
-                                      sigmaY: 4.0,
-                                    ),
+                                    imageFilter: _isBlur[index]
+                                        ? ImageFilter.blur(
+                                            sigmaX: 4.0, sigmaY: 4.0)
+                                        : ImageFilter.blur(
+                                            sigmaX: 0.0, sigmaY: 0.0),
                                     child: Stack(
                                       children: [
                                         Image.asset(
@@ -123,7 +124,7 @@ class ImageListState extends State<ImageList> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      deblurImage();
+                                      deblurImage(index);
                                     },
                                     child: Text('Remove Blur'),
                                   ),
