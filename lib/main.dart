@@ -51,12 +51,13 @@ class ImageListState extends State<ImageList> {
   void _clearImage() {
     setState(() {
       _images.clear();
+      _isBlur.clear();
     });
   }
 
   void deblurImage(int i) {
     setState(() {
-      _isBlur.add(false);
+      _isBlur[i] = false;
     });
   }
 
@@ -122,11 +123,37 @@ class ImageListState extends State<ImageList> {
                                       ],
                                     ),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      deblurImage(index);
-                                    },
-                                    child: Text('Remove Blur'),
+                                  Positioned(
+                                    bottom: 0.0,
+                                    right: 0.0,
+                                    left: 0.0,
+                                    child: Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          deblurImage(index);
+                                        },
+                                        child: Text('Remove Blur'),
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                          ),
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                            Colors.cyan,
+                                          ),
+                                          foregroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Colors.black54),
+                                          elevation:
+                                              MaterialStateProperty.all<double>(
+                                                  10),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
