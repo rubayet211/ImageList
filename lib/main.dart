@@ -117,8 +117,11 @@ class ImageListState extends State<ImageList> {
                                             sigmaX: 0.0, sigmaY: 0.0),
                                     child: Stack(
                                       children: [
-                                        Image.asset(
-                                          _images[index],
+                                        Center(
+                                          child: Image.asset(
+                                            _images[index],
+                                            fit: BoxFit.scaleDown,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -180,6 +183,8 @@ class ImageListState extends State<ImageList> {
                     backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.redAccent,
                     ),
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Colors.redAccent),
                   ),
                 ),
               ],
